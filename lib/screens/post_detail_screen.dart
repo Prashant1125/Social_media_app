@@ -42,49 +42,50 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               margin: const EdgeInsets.all(15),
               color: Colors.blue.shade50,
               elevation: 5,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.post?.title ?? "",
-                    style: namestyle.copyWith(fontSize: 18),
-                  ),
-                  Text(
-                    widget.post?.body ?? "",
-                    style: subtitle,
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.post?.title ?? "",
+                      style: namestyle.copyWith(fontSize: 18),
+                    ),
+                    Text(
+                      widget.post?.body ?? "",
+                      style: subtitle,
+                    ),
+                  ],
+                ),
               ),
             ),
             Text(
               'Comments',
               style: namestyle,
             ),
-            Expanded(
-              child: Obx(() {
-                if (commentsController.isLoading.value) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: commentsController.comments.length,
-                  itemBuilder: (context, index) {
-                    final comment = commentsController.comments[index];
-                    return Container(
-                      margin: const EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1, color: Colors.black),
-                      ),
-                      child: ListTile(
-                        title: Text('User : ${comment.email.toString()}'),
-                        subtitle: Text(comment.body.toString()),
-                      ),
-                    );
-                  },
-                );
-              }),
-            ),
+            Obx(() {
+              if (commentsController.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: commentsController.comments.length,
+                itemBuilder: (context, index) {
+                  final comment = commentsController.comments[index];
+                  return Container(
+                    margin: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 1, color: Colors.black),
+                    ),
+                    child: ListTile(
+                      title: Text('User : ${comment.email.toString()}'),
+                      subtitle: Text(comment.body.toString()),
+                    ),
+                  );
+                },
+              );
+            }),
           ],
         ));
   }
