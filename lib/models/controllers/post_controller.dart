@@ -6,21 +6,28 @@ class PostsController extends GetxController {
   final ApiService _apiService = ApiService();
   var posts = <PostModel>[].obs;
   var isLoading = true.obs;
+  var error = ''.obs;
 
-  @override
-  void onInit() {
-    fetchPosts();
-    super.onInit();
+// fetch all posts
+  Future<void> fetchPosts() async {
+    isLoading(true);
+    try {
+      final fetchedPosts = await _apiService.fetchPosts();
+      posts.assignAll(fetchedPosts);
+    } catch (e) {
+      error.value = e.toString();
+    } finally {
+      isLoading.value = false;
+    }
   }
 
-  void fetchPosts() async {
+  // Create a new post
+  Future<void> createPost(PostModel post) async {
     try {
-      isLoading(true);
-      posts.value = await _apiService.fetchPosts();
+      final newPost = await _apiService.createPost(post);
+      posts.add(newPost); // Update the list with the new post
     } catch (e) {
-      print('Error fetching posts: $e');
-    } finally {
-      isLoading(false);
+      error.value = e.toString();
     }
   }
 }

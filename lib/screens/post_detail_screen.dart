@@ -67,6 +67,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               if (commentsController.isLoading.value) {
                 return const Center(child: CircularProgressIndicator());
               }
+              if (commentsController.comments.isEmpty) {
+                return const Center(child: Text('No Comment found'));
+              }
               return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
