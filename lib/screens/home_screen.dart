@@ -27,15 +27,6 @@ class HomeScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () => addPosts(context),
-          // onPressed: () async {
-          // final newPost = PostModel(
-          //   id: 0,
-          //   title: 'New Post',
-          //   body: 'This is the body of the new post.',
-          //   userId: 1,
-          // );
-          // await postsController.createPost(newPost);
-          // },
           label: const Text('Create new Post'),
         ),
         body: Obx(() {

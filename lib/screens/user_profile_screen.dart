@@ -4,28 +4,19 @@ import 'package:social_media_app/models/controllers/user_controller.dart';
 
 import '../constant/constants.dart';
 
-class UsersProfileScreen extends StatefulWidget {
+class UsersProfileScreen extends StatelessWidget {
   final int? userId;
-  const UsersProfileScreen({
+  UsersProfileScreen({
     super.key,
     required this.userId,
   });
 
-  @override
-  State<UsersProfileScreen> createState() => _UsersProfileScreenState();
-}
-
-class _UsersProfileScreenState extends State<UsersProfileScreen> {
   final UsersController usersController = Get.put(UsersController());
 
   @override
-  void initState() {
-    usersController.fetchUsers(widget.userId ?? 0);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    usersController.fetchUsers(userId ?? 0);
+
     return Scaffold(
         appBar: AppBar(title: const Text('User Detail')),
         body: ListView(

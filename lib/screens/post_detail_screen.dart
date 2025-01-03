@@ -6,33 +6,22 @@ import 'package:social_media_app/screens/user_profile_screen.dart';
 import '../models/controllers/comment_controller.dart';
 import '../models/controllers/post_controller.dart';
 
-class PostDetailScreen extends StatefulWidget {
+class PostDetailScreen extends StatelessWidget {
   final PostModel? post;
+  PostDetailScreen({super.key, required this.post});
 
-  const PostDetailScreen({super.key, required this.post});
-
-  @override
-  State<PostDetailScreen> createState() => _PostDetailScreenState();
-}
-
-class _PostDetailScreenState extends State<PostDetailScreen> {
   final CommentsController commentsController = Get.put(CommentsController());
-
   final PostsController postsController = Get.put(PostsController());
 
   @override
-  void initState() {
-    commentsController.fetchComments(widget.post?.id ?? 0);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    commentsController.fetchComments(post?.id ?? 0);
+
     return Scaffold(
         appBar: AppBar(title: const Text('Post Detail')),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            Get.to(UsersProfileScreen(userId: widget.post?.userId));
+            Get.to(UsersProfileScreen(userId: post?.userId));
           },
           label: const Text("User Detail"),
         ),
@@ -48,11 +37,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.post?.title ?? "",
+                      post?.title ?? "",
                       style: namestyle.copyWith(fontSize: 18),
                     ),
                     Text(
-                      widget.post?.body ?? "",
+                      post?.body ?? "",
                       style: subtitle,
                     ),
                   ],
